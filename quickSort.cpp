@@ -1,9 +1,17 @@
 #include<iostream>
 using namespace std;
 
+/*
+    The quick sort works on the principle that an element is sorted if all the element to its right are greater than that element
+    and all the elements on the left are smaller than itself.
+    Steps:
+        1. Firstly we will assign the pivot element to the first element of the array and then find the appropriate position for it.
+        2. Then we will call the recursive quick sort function for the two halves after partition.
+*/
+
 int partition(int arr[], int l, int h){
 
-    int pivot = arr[l];
+    int pivot = arr[l];  // the partition element
     int i = l;
     int j = h;
 
@@ -17,21 +25,21 @@ int partition(int arr[], int l, int h){
         }while(arr[j] > pivot);
 
         if(i<j){
-            swap(arr[i], arr[j]);
+            swap(arr[i], arr[j]);  // swapping the greater and the smaller elements on both side
         }
 
     }while(i<j);
 
-    swap(arr[l], arr[j]);
+    swap(arr[l], arr[j]);  // swapping the pivot element with the found position
 
     return j;
 }
 
 void quickSort(int arr[], int l, int h){
 
-    if(l < h){
-        int j = partition(arr, l, h);
-        quickSort(arr, 0, j);
+    if(l < h){ // checking if there is at least 2 elements
+        int j = partition(arr, l, h);  // getting the partition elements
+        quickSort(arr, 0, j);  // calling the recursive function for the two halves
         quickSort(arr, j+1, h);
     }
 }
