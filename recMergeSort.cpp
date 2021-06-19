@@ -1,10 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-/*
-    
-*/
-
 void merge(int arr[], int l, int mid, int h){
 
     int i = l, j = mid + 1, k = l;
