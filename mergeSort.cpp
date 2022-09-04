@@ -1,57 +1,74 @@
-#include<iostream>
-using namespace std;
+#include <iostream>  
+  
+using namespace std;  
+  
+/* Function to merge the subarrays of a[] */  
+void merge(int a[], int beg, int mid, int end)    {    
+    int i, j, k;  
+    int n1 = mid - beg + 1;    
+    int n2 = end - mid;    
+      
+    int LeftArray[n1], RightArray[n2]; //temporary arrays  
+      
+    /* copy data to temp arrays */  
+    for (int i = 0; i < n1; i++)    
+    LeftArray[i] = a[beg + i];    
+    for (int j = 0; j < n2; j++)    
+    RightArray[j] = a[mid + 1 + j];    
+      
+    i = 0; /* initial index of first sub-array */  
+    j = 0; /* initial index of second sub-array */   
+    k = beg;  /* initial index of merged sub-array */  
+      
+    while (i < n1 && j < n2)    {    
+        if(LeftArray[i] <= RightArray[j])    {    
+            a[k] = LeftArray[i];    
+            i++;    
+        }    
+        else    {    
+            a[k] = RightArray[j];    
+            j++;    
+        }    
+        k++;    
+    }    
 
-void merge(int arr[], int l, int mid, int h){
-    int i = l, j = mid + 1, k = l;
-    int len = h-l + 1;
-    int b[len];
+    while (i<n1)    {    
+        a[k] = LeftArray[i];    
+        i++;    
+        k++;    
+    }    
+      
+    while (j<n2)    {    
+        a[k] = RightArray[j];    
+        j++;    
+        k++;    
+    }    
+}    
+  
+void mergeSort(int a[], int beg, int end)  {  // low, high
 
-    while(i<=mid && j<=h){
-        if(arr[i] < arr[j]){
-            b[k++] = arr[i++];
-        }else{
-            b[k++] = arr[j++];
-        }
-    }
-    for(; i<=mid; i++){
-        b[k++] = arr[i];
-    }
-    for(; j<=h; j++){
-        b[k++] = arr[j];
-    }
-    for(int i = l; i<=h; i++){
-        arr[i] = b[i];
-    }
-}
-
-void IMergeSort(int arr[], int n){
-    int p, l, h, mid, i;
-
-    for(int p = 2; p <= n; p*=2){
-        for(i = 0; i+p-1 < n; i++){
-            l = i;
-            h = i+p-1;
-            mid = (l+h)/2;
-            merge(arr, l, mid, h);
-        }
-    }
-    if(p/2 < n){
-        merge(arr, 0, p/2, n-1);
-    }
-}
-
-int main(){
-    int n;
-    cin>>n;
-
-    int arr[n];
-    for(int i = 0; i < n; i++){
-        cin>>arr[i];
-    }
-
-    IMergeSort(arr, n);
-    for(int i = 0; i<n; i++){
-        cout<<arr[i]<<" ";
-    }
-    return 0;
-}
+    if (beg < end){  
+        int mid = (beg + end) / 2;  
+        mergeSort(a, beg, mid);  
+        mergeSort(a, mid + 1, end);  
+        merge(a, beg, mid, end);  
+    }  
+}  
+  
+/* Function to print the array */  
+void printArray(int a[], int n)  {  
+    int i;  
+    for (i = 0; i < n; i++)  
+        cout<<a[i]<<" ";  
+}  
+  
+int main()  {  
+    int a[] = { 11, 30, 24, 7, 31, 16, 39, 41 };  
+    int n = sizeof(a) / sizeof(a[0]);  
+    cout<<"Before sorting array elements are - \n";  
+    printArray(a, n);  
+    mergeSort(a, 0, n - 1);  
+    cout<<"\nAfter sorting array elements are - \n";  
+    printArray(a, n);  
+    return 0;  
+} 
